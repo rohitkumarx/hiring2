@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,25 +11,19 @@
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
   </head>
 <body>
-  <div id="main">
-    <h1>Hello Company</h1>
-    <div id="post-details">
+  <div id="post-details">
         <h1 id="p1"></h1>
         <h1 id="p2"><h1>
-        <h1 id="p3"><h1>
+        <h1 id="p3"><h1> 
     </div>
-    <ul id="show-info">
-    </ul>
-
-  </div>
     <script type="text/javascript">
     Parse.initialize("dMRtXwbJUICELwaePXQ2fn8RXVrWt8kTbexj76pL", "8rgprDG1ZYtYuzFLAVsJQEmEa2Qism1mu8s14C1V");    
     var class1_object = Parse.Object.extend("class1");
     var class2_object = Parse.Object.extend("class2");
 
-    /*$("#post-details").on("click","a",function(event){
+    /*$("#show-info").on("click","a",function(event){
         event.defaultPrevented();
-        var id = $(this).attr("href");        
+        var id = $(this).attr("href");
         var query = new Parse.Query(class1_object);
         query.equalTo("objectId",id);
         query.include("pointer"); 
@@ -45,39 +38,48 @@
               var moviecomment = link.get("moviecomment");
           
               var id = link.id;
-              $("#p1").html(moviename);
+              /*$("#p1").html(moviename);
               $("#p2").html(movierating);
               $("#p3").html(moviecomment);
 
+            output+="<li>";
+            output+="<h4>"+moviename+"</h4>";
+            output+="<h4>"+movierating+"</h4>";
+            output+="<h4>"+moviecomment+"</h4>";
+            output+="</li>";
+
+            $("#post-details").attr("data-id",id);  
+            $("#post-details").html(output);   
           }, error: function(error){
             console.log("Query Error: "+error.message);
           }
         });
     });*/
-    function getPosts(){
-      var query = new Parse.Query(class1_object);
+function getMovies(){
+      var query = new Parse.Query(class2_object);
       query.find({     
         success: function(results){
           var output="";
-          for( var i in results){
-            var name = results[i].get("username");
-            var pass = results[i].get("password");
-            var pointer_to_other_class = results[i].get("pointer");
-            var id = pointer_to_other_class.id;
-            
-            output+="<li>";
-            output+="<h4><a href='view.ejs'>"+name+"</h4>";
-            output+="<h4>"+pass+"</h4>";
-            
-            output+="</li>";
+            for(var i in results){
+
+            var name = results[i].get("moviename");
+            var rate = results[i].get("movierating");
+            var comm = results[i].get("moviecomment");
+            /*var pointer_to_other_class = results[i].get("pointer");*/
+            /*var id = pointer_to_other_class.id;*/
+            /*alert(name);*/
+
+              $("#p1").html(name);
+              $("#p2").html(rate);
+              $("#p3").html(comm);
           }
-          $("#show-info").html(output);
+          /*$("#post-details").html(output);*/
         }, error: function(error){
           console.log("Query Error: "+error.message);
         }
       });
     }
-    getPosts();
-  </script>
+    getMovies();
+    </script>
 </body>
 </html>
